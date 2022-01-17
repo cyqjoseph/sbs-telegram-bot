@@ -1,0 +1,19 @@
+{
+  "sessions": [
+    {
+      "id": "258071819:258071819",
+      "data": {
+        "busData": [
+          {
+            "serviceNo": "195",
+            "busStopCode": "13091"
+          },
+          {
+            "serviceNo": "32",
+            "busStopCode": "13091"
+          }
+        ]
+      }
+    }
+  ]
+}
