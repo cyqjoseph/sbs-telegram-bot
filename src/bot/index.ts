@@ -1,8 +1,7 @@
 const dotenv = require("dotenv");
-
+const { Composer } = require("micro-bot");
 import { Telegraf } from "telegraf";
-import { Stage } from "telegraf/typings/scenes";
-import { WizardScene } from "telegraf/typings/scenes";
+
 import LocalSession from "telegraf-session-local";
 import { botOnGetBusStop, getBusTiming } from "../data/getBusData";
 import { QueryWithData, MyContext, BusOption } from "../interfaces";
@@ -21,6 +20,10 @@ bot.use(async (ctx, next: any) => {
 });
 
 bot.use(new LocalSession({ database: "db.json" }));
+// bot.use(stage.middleware());
+// bot.command("id", (ctx: any) => {
+//   ctx.scene.enter("super-wizard");
+// });
 
 bot.command("/showDB", (ctx) => {
   ctx.replyWithMarkdown(
