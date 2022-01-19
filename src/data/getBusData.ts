@@ -100,7 +100,7 @@ export const botOnGetBusStop = async function (bot: Telegraf<MyContext>) {
       await getBusTiming(serviceNo, busStopCode, ctx);
       // Ask User if he wants to save bus location to database
 
-      saveBusOption(bot, ctx, serviceNo, busStopCode);
+      // saveBusOption(bot, ctx, serviceNo, busStopCode);
     } catch (e: any) {}
   });
 };

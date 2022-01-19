@@ -19,26 +19,12 @@ bot.use(async (ctx, next: any) => {
 });
 
 bot.use(new LocalSession({ database: "db.json" }));
-// bot.use(stage.middleware());
-// bot.command("id", (ctx: any) => {
-//   ctx.scene.enter("super-wizard");
-// });
 
-bot.command("/showDB", (ctx) => {
-  ctx.replyWithMarkdown(
-    `Database has \`${ctx.session.busData}\` messages from @${
-      ctx.from.username || ctx.from.id
-    }`
-  );
+bot.help((ctx) => {
+  ctx.reply("Send /find to learn how to find your next bus");
+  // ctx.reply("Send /getBus to get all your saved buses");
+  // ctx.reply("Send /removeBus to remove one of your saved buses");
 });
-
-bot.command("/clearDB", (ctx) => {
-  ctx.replyWithMarkdown(
-    `Removing session from database: \`${JSON.stringify(ctx.session)}\``
-  );
-  ctx.session = null;
-});
-
 ////////////////
 // Default commands
 bot.catch((err, ctx) => {
@@ -63,37 +49,54 @@ bot.command("find", (ctx) => {
 });
 
 // MARKUP I +S BEING PERSISTED :(
-bot.command("getBus", (ctx) => {
-  getBusDataMarkup(ctx, "Click to find your bus timings.");
-  bot.on("callback_query", async (ctx) => {
-    ctx.telegram.answerCbQuery(ctx.callbackQuery.id);
-    const cb = ctx.callbackQuery as QueryWithData;
-    const [serviceNo, busStopCode] = cb.data.split(" ");
-    await getBusTiming(serviceNo, busStopCode, ctx);
-  });
-});
+// bot.command("getBus", (ctx) => {
+//   getBusDataMarkup(ctx, "Click to find your bus timings.");
+//   bot.on("callback_query", async (ctx) => {
+//     ctx.telegram.answerCbQuery(ctx.callbackQuery.id);
+//     const cb = ctx.callbackQuery as QueryWithData;
+//     const [serviceNo, busStopCode] = cb.data.split(" ");
+//     await getBusTiming(serviceNo, busStopCode, ctx);
+//   });
+// });
 
-bot.command("removeBus", (ctx) => {
-  getBusDataMarkup(ctx, "Click to remove your option.");
-  bot.on("callback_query", (ctx) => {
-    console.log(ctx);
-    ctx.telegram.answerCbQuery(ctx.callbackQuery.id);
-    const cb = ctx.callbackQuery as QueryWithData;
+// bot.command("removeBus", (ctx) => {
+//   getBusDataMarkup(ctx, "Click to remove your option.");
+//   bot.on("callback_query", (ctx) => {
+//     console.log(ctx);
+//     ctx.telegram.answerCbQuery(ctx.callbackQuery.id);
+//     const cb = ctx.callbackQuery as QueryWithData;
 
-    const [serviceNo, busStopCode] = cb.data.split(" ");
+//     const [serviceNo, busStopCode] = cb.data.split(" ");
 
-    ctx.session.busData = ctx.session.busData.filter((el: BusOption) => {
-      return el.serviceNo !== serviceNo || el.busStopCode !== busStopCode;
-    });
-    ctx.reply("Option removed successfully");
-  });
-});
+//     ctx.session.busData = ctx.session.busData.filter((el: BusOption) => {
+//       return el.serviceNo !== serviceNo || el.busStopCode !== busStopCode;
+//     });
+//     ctx.reply("Option removed successfully");
+//   });
+// });
 
 /////////////
 // Actions
-bot.action("exitSaveData", (ctx) => {
-  ctx.telegram.answerCbQuery(ctx.callbackQuery.id);
-  ctx.reply("Option not saved, have a good day!");
-});
+// bot.action("exitSaveData", (ctx) => {
+//   ctx.telegram.answerCbQuery(ctx.callbackQuery.id);
+//   ctx.reply("Option not saved, have a good day!");
+// });
 
 module.exports = bot;
+
+//////////
+// TESTIMG
+// bot.command("/showDB", (ctx) => {
+//   ctx.replyWithMarkdown(
+//     `Database has \`${ctx.session.busData}\` messages from @${
+//       ctx.from.username || ctx.from.id
+//     }`
+//   );
+// });
+
+// bot.command("/clearDB", (ctx) => {
+//   ctx.replyWithMarkdown(
+//     `Removing session from database: \`${JSON.stringify(ctx.session)}\``
+//   );
+//   ctx.session = null;
+// });
