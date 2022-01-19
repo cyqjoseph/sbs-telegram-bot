@@ -1,1 +1,1 @@
-worker: node index.js
+worker: nodemon --watch 'src/**/*.ts' --exec \"ts-node\" src/index.ts
