@@ -1,5 +1,4 @@
 const dotenv = require("dotenv");
-const { Composer } = require("micro-bot");
 import { Telegraf } from "telegraf";
 
 import LocalSession from "telegraf-session-local";
