@@ -1,5 +1,6 @@
 import { BusOption, MyContext } from "../interfaces";
 import { Markup } from "telegraf";
+import moment from "moment";
 export const capitalizeWords = function (val: string) {
   return val.replace(/(?:^|\s)\S/g, function (a) {
     return a.toUpperCase();
@@ -42,4 +43,21 @@ export const getBusDataMarkup = function (ctx: MyContext, message: string) {
     ctx.reply(message, Markup.inlineKeyboard(markupData, { columns: 2 }));
   }
   return markupData;
+};
+
+export const getTimeNow = function () {
+  const now = moment();
+  const hourMin = now.format("HH:MM");
+  const dayOfWeek = now.day();
+  return { now, hourMin, dayOfWeek };
+};
+
+export const getWeekDay = function (num: number) {
+  if (num === 6) {
+    return "Saturdays";
+  } else if (num == 0) {
+    return null;
+  } else {
+    return "Weekdays";
+  }
 };

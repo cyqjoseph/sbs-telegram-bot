@@ -2,10 +2,9 @@ const dotenv = require("dotenv");
 import { Telegraf } from "telegraf";
 
 import LocalSession from "telegraf-session-local";
-import { botOnGetBusStop, getBusTiming } from "../data/getBusData";
-import { QueryWithData, MyContext, BusOption } from "../interfaces";
-import { getBusDataMarkup } from "../helpers";
-
+import { botOnGetBusStop } from "../data/getBusData";
+import { MyContext } from "../interfaces";
+import { getERPCosts } from "../data/getERP";
 dotenv.config({ path: "config.env" });
 
 const bot = new Telegraf<MyContext>(process.env.TELEGRAM_BOT_TOKEN as string);
@@ -22,6 +21,7 @@ bot.use(new LocalSession({ database: "db.json" }));
 
 bot.help((ctx) => {
   ctx.reply("Send /find to learn how to find your next bus");
+  ctx.reply("Send /getERP to get ERP costs around Singapore now");
   // ctx.reply("Send /getBus to get all your saved buses");
   // ctx.reply("Send /removeBus to remove one of your saved buses");
 });
@@ -39,7 +39,6 @@ bot.start((ctx) =>
 
 /////////////////
 // Commands
-//bot.hears(/^[0-9 ]+$/, () => {});
 
 botOnGetBusStop(bot);
 
@@ -47,6 +46,29 @@ bot.command("find", (ctx) => {
   ctx.reply("Enter your bus service and bus stop seperated by a space");
   ctx.reply("Like this: 242 13091");
 });
+
+bot.command("getERP", async (ctx) => {
+  await getERPCosts(ctx);
+});
+
+module.exports = bot;
+
+//////////
+// TESTIMG
+// bot.command("/showDB", (ctx) => {
+//   ctx.replyWithMarkdown(
+//     `Database has \`${ctx.session.busData}\` messages from @${
+//       ctx.from.username || ctx.from.id
+//     }`
+//   );
+// });
+
+// bot.command("/clearDB", (ctx) => {
+//   ctx.replyWithMarkdown(
+//     `Removing session from database: \`${JSON.stringify(ctx.session)}\``
+//   );
+//   ctx.session = null;
+// });
 
 // MARKUP I +S BEING PERSISTED :(
 // bot.command("getBus", (ctx) => {
@@ -80,23 +102,4 @@ bot.command("find", (ctx) => {
 // bot.action("exitSaveData", (ctx) => {
 //   ctx.telegram.answerCbQuery(ctx.callbackQuery.id);
 //   ctx.reply("Option not saved, have a good day!");
-// });
-
-module.exports = bot;
-
-//////////
-// TESTIMG
-// bot.command("/showDB", (ctx) => {
-//   ctx.replyWithMarkdown(
-//     `Database has \`${ctx.session.busData}\` messages from @${
-//       ctx.from.username || ctx.from.id
-//     }`
-//   );
-// });
-
-// bot.command("/clearDB", (ctx) => {
-//   ctx.replyWithMarkdown(
-//     `Removing session from database: \`${JSON.stringify(ctx.session)}\``
-//   );
-//   ctx.session = null;
 // });

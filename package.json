@@ -22,8 +22,8 @@
     "axios": "^0.24.0",
     "dotenv": "^11.0.0",
     "express": "^4.17.2",
-    "micro-bot": "^2.5.3",
-    "node-cron": "^3.0.0",
+    "moment": "^2.29.1",
+    "table": "^6.8.0",
     "telegraf": "^4.5.2",
     "telegraf-session-local": "^2.1.0"
   },
