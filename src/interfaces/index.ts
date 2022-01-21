@@ -21,3 +21,10 @@ export interface BusOption {
   serviceNo: string;
   busStopCode: string;
 }
+
+export enum WizardOptions {
+  CARPARK_WIZARD = "CARPARK_DATA_WIZARD",
+  GET_BUS_FROM_CACHE_WIZARD = "GET_BUS_FROM_CACHE_WIZARD",
+  GET_BUS_WIZARD = "GET_BUS_WIZARD",
+  REMOVE_BUS_WIZARD = "REMOVE_BUS_WIZARD",
+}

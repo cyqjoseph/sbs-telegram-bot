@@ -42,6 +42,10 @@ export const getERPCosts = async function (ctx: MyContext) {
         );
       }
     );
+    // console.log(
+    //   moment(),
+    //   moment("2022-01-21, 18:30:00", "YYYY-MM-DD, HH:mm:ss")
+    // );
     if (filteredData.length === 0) {
       ctx.replyWithHTML("<b><i>No ERP Charge at this time!</i></b>");
       return;

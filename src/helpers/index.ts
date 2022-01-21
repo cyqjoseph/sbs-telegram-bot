@@ -28,19 +28,15 @@ export const findDuplicateBuses = function (
   return false;
 };
 
-export const getBusDataMarkup = function (ctx: MyContext, message: string) {
+export const getBusDataMarkup = function (ctx: MyContext) {
   let markupData;
   const { busData } = ctx.session;
   if (!busData) {
     ctx.reply("No options saved. Please enter your option manually");
   } else {
     markupData = busData.map((el: BusOption) => {
-      return Markup.button.callback(
-        `${el.serviceNo} ${el.busStopCode}`,
-        `${el.serviceNo} ${el.busStopCode}`
-      );
+      return Markup.button.text(`${el.serviceNo} ${el.busStopCode}`);
     });
-    ctx.reply(message, Markup.inlineKeyboard(markupData, { columns: 2 }));
   }
   return markupData;
 };
@@ -61,13 +57,3 @@ export const getWeekDay = function (num: number) {
     return "Weekdays";
   }
 };
-
-// export const getLotType = function (lotType: "C" | "H" | "Y") {
-//   if (lotType === "C") {
-//     return "Cars";
-//   } else if (lotType === "Y") {
-//     return "Motorcycles";
-//   } else {
-//     return "Heavy Vehicles";
-//   }
-// };

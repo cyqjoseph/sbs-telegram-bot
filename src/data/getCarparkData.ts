@@ -2,7 +2,7 @@ import axios from "axios";
 import { table } from "table";
 import { Scenes, Markup } from "telegraf";
 import { capitalizeWords } from "../helpers";
-
+import { WizardOptions } from "../interfaces";
 interface CarparkData {
   Area: string;
   Development: string;
@@ -41,9 +41,8 @@ const lotTypeLegend = table(
 );
 
 export const getCarparkAvailibilty = new Scenes.WizardScene(
-  "CARPARK_DATA_WIZARD",
+  WizardOptions.CARPARK_WIZARD,
   (ctx: any) => {
-    console.log("called in wizard");
     ctx.replyWithMarkdown(
       "Where is the location of the carpark?",
       Markup.keyboard(

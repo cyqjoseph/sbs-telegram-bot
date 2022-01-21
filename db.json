@@ -3,7 +3,17 @@
     {
       "id": "258071819:258071819",
       "data": {
-        "__scenes": {}
+        "__scenes": {},
+        "busData": [
+          {
+            "serviceNo": "32",
+            "busStopCode": "13091"
+          },
+          {
+            "serviceNo": "139",
+            "busStopCode": "13091"
+          }
+        ]
       }
     }
   ]
