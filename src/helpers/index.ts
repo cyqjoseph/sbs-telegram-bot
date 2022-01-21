@@ -61,3 +61,13 @@ export const getWeekDay = function (num: number) {
     return "Weekdays";
   }
 };
+
+// export const getLotType = function (lotType: "C" | "H" | "Y") {
+//   if (lotType === "C") {
+//     return "Cars";
+//   } else if (lotType === "Y") {
+//     return "Motorcycles";
+//   } else {
+//     return "Heavy Vehicles";
+//   }
+// };

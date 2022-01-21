@@ -1,13 +1,18 @@
 const dotenv = require("dotenv");
-import { Telegraf } from "telegraf";
+import { Telegraf, session } from "telegraf";
 
 import LocalSession from "telegraf-session-local";
 import { botOnGetBusStop } from "../data/getBusData";
 import { MyContext } from "../interfaces";
-import { getERPCosts } from "../data/getERP";
+import { getERPCosts } from "../data/getERPData";
+import { Scenes } from "telegraf";
+import { getCarparkAvailibilty } from "../data/getCarparkData";
+
 dotenv.config({ path: "config.env" });
 
 const bot = new Telegraf<MyContext>(process.env.TELEGRAM_BOT_TOKEN as string);
+
+const stage = new Scenes.Stage([getCarparkAvailibilty]);
 
 // MIDDLEWARES
 bot.use(async (ctx, next: any) => {
@@ -18,10 +23,13 @@ bot.use(async (ctx, next: any) => {
 });
 
 bot.use(new LocalSession({ database: "db.json" }));
+// bot.use(session());
+bot.use(stage.middleware());
 
 bot.help((ctx) => {
   ctx.reply("Send /find to learn how to find your next bus");
   ctx.reply("Send /getERP to get ERP costs around Singapore now");
+  ctx.reply("Send /getCarpark to get carkpark availibility spots");
   // ctx.reply("Send /getBus to get all your saved buses");
   // ctx.reply("Send /removeBus to remove one of your saved buses");
 });
@@ -49,6 +57,11 @@ bot.command("find", (ctx) => {
 
 bot.command("getERP", async (ctx) => {
   await getERPCosts(ctx);
+});
+
+bot.command("getCarpark", (ctx) => {
+  ctx.scene.enter("CARPARK_DATA_WIZARD");
+  return;
 });
 
 module.exports = bot;

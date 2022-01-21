@@ -14,6 +14,7 @@ export interface QueryWithData {
 
 export interface MyContext extends Context {
   session: any;
+  scene: any;
 }
 
 export interface BusOption {
