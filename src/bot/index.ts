@@ -34,11 +34,14 @@ bot.use(stage.middleware());
 
 ////////////////
 // Default commands
-bot.start((ctx) =>
-  ctx.reply(
-    "Welcome to SBS Telegram bot. Send /find to learn how to find your next bus timing"
-  )
-);
+bot.start((ctx) => {
+  ctx.reply("Welcome to SBS Telegram bot.");
+  ctx.reply("Send /find to learn how to find your next bus");
+  ctx.reply("Send /getERP to get ERP costs around Singapore now");
+  ctx.reply("Send /getBus to get the list of your saved buses");
+  ctx.reply("Send /getCarpark to get carkpark availibility spots");
+  ctx.reply("Send /removeBus to remove one of your saved Buses");
+});
 
 bot.help((ctx) => {
   ctx.reply("Send /find to learn how to find your next bus");
