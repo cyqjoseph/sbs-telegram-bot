@@ -1,11 +1,11 @@
 import { Scenes, Markup } from "telegraf";
 import { getBusTiming } from "../data/getBusData";
 import { getBusDataMarkup, findDuplicateBuses } from "../helpers";
-import { WizardOptions, BusOption } from "../interfaces";
+import { WizardOptions, BusOption, MyContext } from "../interfaces";
 
 export const getBus = new Scenes.WizardScene(
   WizardOptions.GET_BUS_WIZARD,
-  async (ctx: any) => {
+  async (ctx: MyContext) => {
     ctx.wizard.state.input = "";
     try {
       ctx.wizard.state.input = ctx.message.text;
@@ -21,12 +21,12 @@ export const getBus = new Scenes.WizardScene(
       );
 
       ctx.wizard.next();
-    } catch (e: any) {
+    } catch (e: unknown) {
       ctx.reply("An error occurred, please try again later.");
       ctx.scene.leave();
     }
   },
-  (ctx: any) => {
+  (ctx: MyContext) => {
     if (ctx.message.text === "No") {
       ctx.reply("Option not saved, have a good day!");
       return ctx.scene.leave();
@@ -51,16 +51,21 @@ export const getBus = new Scenes.WizardScene(
 
 export const getBusFromCache = new Scenes.WizardScene(
   WizardOptions.GET_BUS_FROM_CACHE_WIZARD,
-  (ctx: any) => {
+  (ctx: MyContext) => {
     ctx.wizard.state.input = "";
-
+    const markup = getBusDataMarkup(ctx);
+    if (markup.length === 0) {
+      ctx.reply("No buses saved.");
+      ctx.scene.leave();
+      return;
+    }
     ctx.replyWithMarkdown(
       "Getting your saved buses",
-      Markup.keyboard(getBusDataMarkup(ctx)).oneTime()
+      Markup.keyboard(markup).oneTime()
     );
     ctx.wizard.next();
   },
-  async (ctx: any) => {
+  async (ctx: MyContext) => {
     ctx.wizard.state.input = ctx.message.text;
     const [serviceNo, busStopCode] = ctx.message.text.split(" ");
     await getBusTiming(serviceNo, busStopCode, ctx);
@@ -71,14 +76,20 @@ export const getBusFromCache = new Scenes.WizardScene(
 
 export const removeBus = new Scenes.WizardScene(
   WizardOptions.REMOVE_BUS_WIZARD,
-  (ctx: any) => {
+  (ctx: MyContext) => {
+    const markup = getBusDataMarkup(ctx);
+    if (markup.length === 0) {
+      ctx.reply("No buses saved.");
+      ctx.scene.leave();
+      return;
+    }
     ctx.replyWithMarkdown(
       "Getting your saved buses",
-      Markup.keyboard(getBusDataMarkup(ctx)).oneTime()
+      Markup.keyboard(markup).oneTime()
     );
     ctx.wizard.next();
   },
-  (ctx: any) => {
+  (ctx: MyContext) => {
     const [serviceNo, busStopCode] = ctx.message.text.split(" ");
 
     ctx.session.busData = ctx.session.busData.filter((el: BusOption) => {

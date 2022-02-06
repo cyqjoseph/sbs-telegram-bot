@@ -22,7 +22,7 @@ const stage = new Scenes.Stage([
 
 // MIDDLEWARES
 
-bot.use(async (ctx, next: any) => {
+bot.use(async (ctx, next) => {
   const start = new Date().valueOf();
   await next();
   const ms = new Date().valueOf() - start;

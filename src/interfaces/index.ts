@@ -1,5 +1,4 @@
 import { Context } from "telegraf";
-
 export interface BusArrivalTimings {
   OriginCode: number;
   DestinationCode: number;
@@ -15,6 +14,8 @@ export interface QueryWithData {
 export interface MyContext extends Context {
   session: any;
   scene: any;
+  wizard: any;
+  message: any;
 }
 
 export interface BusOption {
