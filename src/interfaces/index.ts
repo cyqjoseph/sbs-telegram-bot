@@ -12,7 +12,7 @@ export interface QueryWithData {
 }
 
 export interface MyContext extends Context {
-  session: any;
+  session: { busData: BusOption[] };
   scene: any;
   wizard: any;
   message: any;

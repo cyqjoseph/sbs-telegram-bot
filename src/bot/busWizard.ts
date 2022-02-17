@@ -54,14 +54,14 @@ export const getBusFromCache = new Scenes.WizardScene(
   (ctx: MyContext) => {
     ctx.wizard.state.input = "";
     const markup = getBusDataMarkup(ctx);
-    if (markup.length === 0) {
+    if (markup!.length === 0) {
       ctx.reply("No buses saved.");
       ctx.scene.leave();
       return;
     }
     ctx.replyWithMarkdown(
       "Getting your saved buses",
-      Markup.keyboard(markup).oneTime()
+      Markup.keyboard(markup!).oneTime()
     );
     ctx.wizard.next();
   },
@@ -78,14 +78,14 @@ export const removeBus = new Scenes.WizardScene(
   WizardOptions.REMOVE_BUS_WIZARD,
   (ctx: MyContext) => {
     const markup = getBusDataMarkup(ctx);
-    if (markup.length === 0) {
+    if (markup!.length === 0) {
       ctx.reply("No buses saved.");
       ctx.scene.leave();
       return;
     }
     ctx.replyWithMarkdown(
       "Getting your saved buses",
-      Markup.keyboard(markup).oneTime()
+      Markup.keyboard(markup!).oneTime()
     );
     ctx.wizard.next();
   },
