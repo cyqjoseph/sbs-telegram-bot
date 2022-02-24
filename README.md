@@ -1,5 +1,7 @@
 ##  Telegram bot built using the telegraf framework for nodeJS and the LTA API
 
+### Bot can be found with telegram handle **<code>@SBSTimingBot</code>**
+
 #### Commands & Usage
 - <code>/help</code> to list all commands
 - <code>/find</code> to find out how to get the next bus' timing
